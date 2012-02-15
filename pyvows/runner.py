@@ -238,12 +238,13 @@ class FunctionWrapper(object):
 
         @wraps(method)
         def wrapper(*args, **kw):
+            ret = None
             try:
                 ret = method(*args, **kw)
-                return ret
             finally:
                 self.waiting -= 1
                 self()
+                return ret
 
         wrapper._original = method
         return wrapper
